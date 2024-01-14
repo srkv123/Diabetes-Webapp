@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #F9EFDB;
+  --secondary-color: #EBD9B4;
+  --accent-color: #638889;
+  --text-color: #9DBC98;
+}
+
+body {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+h1,h2,h3,h4 {
+  color: var(--accent-color);
+}
+
+p {
+  color: var(--text-color);
+}
+
+button,
+.button {
+  background-color: var(--accent-color);
+  color: var(--text-color);
+}
+
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
