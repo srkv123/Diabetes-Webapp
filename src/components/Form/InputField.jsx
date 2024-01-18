@@ -2,24 +2,25 @@ import TextField from "@mui/material/TextField";
 import PropTypes from "prop-types";
 import { useState } from "react";
 
-const InputField = ({ label, errorMessage }) => {
+const InputField = ({ label, errorMessage, onInputChange }) => {
   const [inputValue, setInputValue] = useState("");
-  const handleChange = (event) => {
-    setInputValue(event.target.value);
-  };
 
-  const isError = inputValue.trim() === "";
+  const handleChange = (event) => {
+    const newValue = event.target.value;
+    setInputValue(newValue);
+    onInputChange(newValue); // Notify parent component of input change
+  };
 
   return (
     <>
       <TextField
         id={label}
-        label={label}
+        label={`outlined-${label.toLowerCase()}`}
         variant="outlined"
-        helperText={isError ? errorMessage : " "}
+        helperText={errorMessage}
         margin="dense"
-        error={isError}
         value={inputValue}
+        error={!!errorMessage}
         onChange={handleChange}
         fullWidth
         required
@@ -33,4 +34,6 @@ export default InputField;
 InputField.propTypes = {
   label: PropTypes.string.isRequired,
   errorMessage: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onInputChange: PropTypes.func.isRequired,
 };
