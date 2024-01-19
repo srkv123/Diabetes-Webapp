@@ -1,0 +1,9 @@
+.pop-up {
+  background-color: var(--accent-color);
+  border-radius: 50px;
+  padding: 30px 20px;
+  color: aliceblue;
+}
+
+.popup-container {
+}

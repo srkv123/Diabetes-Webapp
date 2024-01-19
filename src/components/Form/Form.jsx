@@ -1,6 +1,7 @@
 import InputField from "./InputField";
 import Button from "@mui/material/Button";
 import { useState } from "react";
+import "../styling/form.css";
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -25,6 +26,9 @@ const Form = () => {
     age: "",
     outcome: "",
   });
+
+  const [popUp, setPopUp] = useState(false);
+  const [popUpMessage, setPopUpMessage] = useState("");
 
   const validateField = (name, value) => {
     const integerRegex = /^\d+$/;
@@ -56,33 +60,63 @@ const Form = () => {
     );
 
     if (hasErrors) {
-      console.error("Form contains validation errors. Please correct them.");
+      setPopUpMessage("Form contains validation errors. Please correct them.");
+      setPopUp(!popUp);
     } else {
       console.log("Submitting data:", formData);
       // Add your API call here
     }
   };
 
+  const handlePopUpClick = () => {
+    setPopUp(false);
+  };
+
   return (
-    <div className="flex flex-col items-center m-5 justify-evenly ">
-      <h2 className="mb-5 text-4xl">Customer Data </h2>
-      <div className="w-full sm:w-1/4">
-        {Object.keys(formData).map((fieldName) => (
-          <InputField
-            key={fieldName}
-            label={fieldName}
-            value={formData[fieldName]}
-            errorMessage={validationErrors[fieldName]}
-            onInputChange={(value) => handleInputChange(fieldName, value)}
-          />
-        ))}
-        <div className="flex flex-row justify-center mt-5">
-          <Button variant="contained" onClick={handleSubmit} className="mt-5 ">
-            Predict the condition
+    <>
+      <div
+        className={
+          popUp
+            ? " popup-container w-full h-lvh z-10 bg-transparent flex flex-col align-middle justify-center text-center items-center absolute rounded-s-xl p-10 backdrop-blur-lg"
+            : "  hidden"
+        }
+      >
+        <div className="pop-up w-[300px]">
+          <p className="mb-5 text-white">{popUpMessage}</p>
+          <Button
+            className=""
+            onClick={handlePopUpClick}
+            variant="contained"
+            color="secondary"
+          >
+            Close
           </Button>
         </div>
       </div>
-    </div>
+      <div className="flex flex-col items-center m-5 justify-evenly ">
+        <h2 className="mb-5 text-4xl">Customer Data </h2>
+        <div className="w-full sm:w-1/4">
+          {Object.keys(formData).map((fieldName) => (
+            <InputField
+              key={fieldName}
+              label={fieldName}
+              value={formData[fieldName]}
+              errorMessage={validationErrors[fieldName]}
+              onInputChange={(value) => handleInputChange(fieldName, value)}
+            />
+          ))}
+          <div className="flex flex-row justify-center mt-5">
+            <Button
+              variant="contained"
+              onClick={handleSubmit}
+              className="mt-5 "
+            >
+              Predict the condition
+            </Button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 
